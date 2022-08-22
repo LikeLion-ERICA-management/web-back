@@ -18,10 +18,13 @@ from django.urls import path, include
 from rest_framework import routers
 from myApp import views
 
+
 router = routers.DefaultRouter()
 router.register(r'board',views.BlogViewSet)
 
 urlpatterns = [
     path('',include(router.urls)),
-    path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('dj-rest-auth/',include('dj_rest_auth.urls')),
+    # path('dj-rest-auth/register/',include('dj_rest_auth.registrations.urls'))
 ]
