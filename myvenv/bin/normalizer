@@ -1,4 +1,4 @@
-#!/Users/junhyung/Desktop/Junior/WholeWeb/back/myvenv/bin/python3.10
+#!/home/ubuntu/DRF_TEST/myvenv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
