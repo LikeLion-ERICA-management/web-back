@@ -1,0 +1,16 @@
+[Unit]
+Description=uWSGI service
+After=syslog.target
+
+[Service]
+# ExecStart = {{venv 폴더}/bin/uwsgi -i {.config 폴더}/uwsgi/uwsgiconfig.ini}
+ExecStart=/home/ubuntu/DRF_TEST/myvenv/bin/uwsgi -i /home/ubuntu/DRF_TEST/MyProject/.config/uwsgi/uwsgiconfig.ini
+
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
