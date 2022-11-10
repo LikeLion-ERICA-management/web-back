@@ -18,6 +18,9 @@ from django.urls import path, include
 from rest_framework import routers
 from myApp import views
 
+from django.views.static import serve
+from django.conf import settings
+from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 router.register(r'board',views.BlogViewSet)
@@ -27,4 +30,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('dj-rest-auth/',include('dj_rest_auth.urls')),
     path('dj-rest-auth/register/',include('dj_rest_auth.registration.urls'))
-]
+] 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
