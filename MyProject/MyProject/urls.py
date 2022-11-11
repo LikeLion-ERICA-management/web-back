@@ -24,6 +24,10 @@ from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 router.register(r'board',views.BlogViewSet)
+router.register(r'paper',views.PaperViewSet)
+router.register(r'paperadmin',views.PaperAdminViewSet)
+router.register(r'actlog',views.ActLogViewSet)
+router.register(r'notice',views.NoticeViewSet)
 
 urlpatterns = [
     path('',include(router.urls)),
