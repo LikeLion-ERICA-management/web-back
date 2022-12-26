@@ -197,5 +197,6 @@ def about(request):
         image = request.data["image"]
         about.body = body
         about.image = image
+        about.save()
     serializer = AboutSerializer(about,context={"request":request})
     return Response(serializer.data)

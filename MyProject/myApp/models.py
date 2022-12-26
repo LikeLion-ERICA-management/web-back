@@ -90,3 +90,8 @@ class About(models.Model):
     body = models.TextField()
     image = models.ImageField(upload_to="Main")
 
+class Work(models.Model):
+    duration = models.CharField(choices=(("1","1학기"),("1.5","여름방학"),("2","2학기")), max_length=10)
+    title = models.CharField(max_length=100),
+    date = models.DateField()
+    image = models.ImageField(upload_to="Work/%Y/%m/%d")

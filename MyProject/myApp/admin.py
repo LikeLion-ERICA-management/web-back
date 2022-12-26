@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import ActLog, Blog, CustomUser, Notice, Paper, PaperAdmin, Application, Opening, About
+from .models import ActLog, Blog, CustomUser, Notice, Paper, PaperAdmin, Application, Opening, About, Work
 # Register your models here.
 
 admin.site.register(Blog)
@@ -14,6 +14,7 @@ admin.site.register(Notice)
 admin.site.register(Application)
 admin.site.register(Opening)
 admin.site.register(About)
+admin.site.register(Work)
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
