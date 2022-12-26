@@ -42,6 +42,30 @@ class Notice(models.Model):
     mod_time = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField()
 
+class Application(models.Model):
+    name = models.CharField(max_length=30)
+    phone_number = models.CharField(max_length=11,unique=True)
+    email = models.EmailField(unique=True)
+    password = models.IntegerField()
+    major = models.CharField(max_length=100)
+    student_id = models.IntegerField(unique=True)
+    create_date = models.DateTimeField(auto_now_add=True)
+    update_date = models.DateTimeField(auto_now=True)
+    generation = models.IntegerField()
+    answer1 = models.TextField(null=True, blank=True)
+    answer2 = models.TextField(null=True, blank=True)
+    answer3 = models.TextField(null=True, blank=True)
+    answer4 = models.TextField(null=True, blank=True)
+    answer5 = models.TextField(null=True, blank=True)
+    answer6 = models.TextField(null=True, blank=True)
+    answer7 = models.TextField(null=True, blank=True)
+    answer8 = models.TextField(null=True, blank=True)
+    answer9 = models.TextField(null=True, blank=True)
+    answer10 = models.TextField(null=True, blank=True)
+    
+    def __str__(self):
+        return self.name
+    
 
 
 
