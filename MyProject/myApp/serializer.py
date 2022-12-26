@@ -43,3 +43,9 @@ class AboutSerializer(serializers.ModelSerializer):
     class Meta:
         model = About
         fields = ('body','image',)
+
+class WorkSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(use_url=True)
+    class Meta:
+        model = Work
+        fields = ('title','duration','date','image',)

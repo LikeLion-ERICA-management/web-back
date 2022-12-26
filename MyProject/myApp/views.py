@@ -200,3 +200,19 @@ def about(request):
         about.save()
     serializer = AboutSerializer(about,context={"request":request})
     return Response(serializer.data)
+
+@api_view(["GET","POST"])
+def work(request):
+    serializer = []
+    if request.method == "POST":
+        work = Work()
+        work.duration = request.data["duration"]
+        work.title = request.data["title"]
+        work.date = request.data["date"]
+        work.image = request.data["image"]
+        work.save()
+        serializer = WorkSerializer(work, context = {"request":request})     
+    else:
+        works = Work.objects.all()
+        serializer = WorkSerializer(works, context = {"request":request}, many = True)
+    return Response(serializer.data)
