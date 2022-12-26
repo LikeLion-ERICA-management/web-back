@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from .serializer import *
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
-
+from rest_framework.response import Response
 
 # Create your views here.
 class BlogViewSet(viewsets.ModelViewSet):
@@ -180,3 +180,22 @@ def update_application(request):
     }
 
     return JsonResponse(res,json_dumps_params={'ensure_ascii': False})
+
+@api_view(["GET"])
+def load_application_questions(request):
+    res = {
+        "questions" : ["1","2","3","4","5","6","7","8","9","10"]
+    }
+
+    return JsonResponse(res,json_dumps_params={'ensure_ascii': False})
+    
+@api_view(["GET","POST"])
+def about(request):
+    about = About.objects.latest()
+    if request.method == "POST":
+        body = request.data["body"]
+        image = request.data["image"]
+        about.body = body
+        about.image = image
+    serializer = AboutSerializer(about,context={"request":request})
+    return Response(serializer.data)

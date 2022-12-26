@@ -7,6 +7,7 @@ class Blog(models.Model):
     context = models.TextField()
 
 class CustomUser(AbstractUser):
+    is_admin = models.BooleanField(default=False)
     # 더 추가 하고 싶은 유저 정보가 있다면 여기에 추가하시면 됩니다.
     def __str__(self):
         return self.email
@@ -66,6 +67,26 @@ class Application(models.Model):
     def __str__(self):
         return self.name
     
+class Opening(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    generation = models.SmallIntegerField()
+    is_opened = models.BooleanField(default = False)
+    question1 = models.TextField(max_length=1000, null=True, blank=True)
+    question2 = models.TextField(max_length=1000, null=True, blank=True)
+    question3 = models.TextField(max_length=1000, null=True, blank=True)
+    question4 = models.TextField(max_length=1000, null=True, blank=True)
+    question5 = models.TextField(max_length=1000, null=True, blank=True)
+    question6 = models.TextField(max_length=1000, null=True, blank=True)
+    question7 = models.TextField(max_length=1000, null=True, blank=True)
+    question8 = models.TextField(max_length=1000, null=True, blank=True)
+    question9 = models.TextField(max_length=1000, null=True, blank=True)
+    question10 = models.TextField(max_length=1000, null=True, blank=True)
 
+class About(models.Model):
+    class Meta:
+        get_latest_by = "id"
 
+    body = models.TextField()
+    image = models.ImageField(upload_to="Main")
 

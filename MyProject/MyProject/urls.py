@@ -32,13 +32,17 @@ router.register(r'notice',views.NoticeViewSet)
 urlpatterns = [
     path('',include(router.urls)),
     path('admin/', admin.site.urls),
+    
     path('checkapply/',views.check_apply),
     path('checkbefore/',views.check_before),
     path('checkpassword/',views.check_password),
     path('apply/',views.apply),
     path('loadapplication/',views.load_application),
     path('updateapplication/',views.update_application),
-    # path('loadapplicationquestion/',),
+    path('loadapplicationquestion/',views.load_application_questions),
+    
+    path('about/',views.about),
+
     path('dj-rest-auth/',include('dj_rest_auth.urls')),
     path('dj-rest-auth/register/',include('dj_rest_auth.registration.urls'))
 ] 

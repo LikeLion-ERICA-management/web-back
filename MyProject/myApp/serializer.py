@@ -38,3 +38,8 @@ class NoticeSerializer(serializers.ModelSerializer):
         model = Notice
         fields = ('title','context','reg_time','mod_time','is_active')
 
+class AboutSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(use_url=True)
+    class Meta:
+        model = About
+        fields = ('body','image',)
