@@ -48,6 +48,10 @@ urlpatterns = [
 
     path("waiter/", views.waiter),
 
+    path("faq/",views.faq),
+    path("faq/update/", views.update_faq),
+    path("faq/delete/", views.delete_faq),
+
     path('dj-rest-auth/',include('dj_rest_auth.urls')),
     path('dj-rest-auth/register/',include('dj_rest_auth.registration.urls'))
 ] 

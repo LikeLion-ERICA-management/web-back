@@ -54,3 +54,8 @@ class WaiterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Waiter
         fields = ('id','name','email','create_date')
+
+class FAQSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FAQ
+        fields = ('id','question_type','question','answer','create_date')

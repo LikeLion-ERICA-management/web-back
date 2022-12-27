@@ -100,3 +100,15 @@ class Waiter(models.Model):
     name = models.CharField(max_length = 10)
     email = models.EmailField()
     create_date = models.DateTimeField(auto_now_add=True)
+
+class FAQ(models.Model):
+    choices = (
+        ("apply", "지원"),
+        ("judge", "심사"),
+        ("act", "활동"),
+        ("etc", "기타")
+    )
+    question_type = models.CharField(choices=choices, max_length=10)
+    question = models.TextField()
+    answer = models.TextField()
+    create_date = models.DateTimeField(auto_now_add=True)

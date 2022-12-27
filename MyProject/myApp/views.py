@@ -248,3 +248,61 @@ def waiter(request):
     serializer = WaiterSerializer(waiters, context = {"request" : request}, many = True)
     
     return Response(serializer.data)
+
+@api_view(["GET", "POST"])
+def faq(request):
+    serializer = []
+    
+    if request.method == "POST":
+        faq = FAQ()
+
+        faq.question_type = request.data["question_type"]
+        faq.question = request.data["question"]
+        faq.answer = request.data["answer"]
+
+        faq.save()
+    
+    faqs = FAQ.objects.all()
+    serializer = FAQSerializer(faqs, context = {"request" : request}, many = True)
+    
+    return Response(serializer.data)
+
+@api_view(["POST"])
+def update_faq(request):
+    serializer = []
+
+    question_id = request.data["question_id"]
+    try:
+        question = FAQ.objects.get(id = question_id)
+        
+        question.question_type = request.data["question_type"]
+        question.question = request.data["question"]
+        question.answer = request.data["answer"]
+        
+        question.save()
+    except FAQ.DoesNotExist:
+        return Response({"result" : "Question id dose not exist"}, status = 404)
+
+    questions = FAQ.objects.all()
+    serializer = FAQSerializer(questions, context = {"request" : request}, many = True)
+    
+    return Response(serializer.data)
+
+
+@api_view(["POST"])
+def delete_faq(request):
+    serializer = []
+
+    question_id = request.data["question_id"]
+    try:
+        question = FAQ.objects.get(id = question_id)
+        
+        question.delete()
+    except FAQ.DoesNotExist:
+        return Response({"result" : "Question id dose not exist"}, status = 404)
+
+    questions = FAQ.objects.all()
+    serializer = FAQSerializer(questions, context = {"request" : request}, many = True)
+    
+    return Response(serializer.data)
+
