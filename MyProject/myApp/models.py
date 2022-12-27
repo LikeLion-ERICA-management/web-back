@@ -103,10 +103,10 @@ class Waiter(models.Model):
 
 class FAQ(models.Model):
     choices = (
-        ("apply", "지원"),
-        ("judge", "심사"),
-        ("act", "활동"),
-        ("etc", "기타")
+        ("지원", "지원"),
+        ("심사", "심사"),
+        ("활동", "활동"),
+        ("기타", "기타")
     )
     question_type = models.CharField(choices=choices, max_length=10)
     question = models.TextField()
