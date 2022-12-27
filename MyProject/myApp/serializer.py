@@ -48,4 +48,4 @@ class WorkSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(use_url=True)
     class Meta:
         model = Work
-        fields = ('title','duration','date','image',)
+        fields = ('id','title','duration','date','image',)

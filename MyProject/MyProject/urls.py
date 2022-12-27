@@ -42,7 +42,9 @@ urlpatterns = [
     path('loadapplicationquestion/',views.load_application_questions),
     
     path('about/',views.about),
+
     path('work/',views.work),
+    path('work/delete/',views.delete_work),
 
     path('dj-rest-auth/',include('dj_rest_auth.urls')),
     path('dj-rest-auth/register/',include('dj_rest_auth.registration.urls'))

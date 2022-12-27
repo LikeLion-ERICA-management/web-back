@@ -216,3 +216,17 @@ def work(request):
         works = Work.objects.all()
         serializer = WorkSerializer(works, context = {"request":request}, many = True)
     return Response(serializer.data)
+
+@api_view(["POST"])
+def delete_work(request):
+    serializer = []
+    try:
+        work_id = request.data["id"]
+        work = Work.objects.get(id = work_id)
+        work.delete()
+    except Work.DoesNotExist:
+        return Response({"response":"Work's ID dose not exist."}, status=404)
+
+    works = Work.objects.all()
+    serializer = WorkSerializer(works, context = {"request": request}, many = True)
+    return Response(serializer.data)
