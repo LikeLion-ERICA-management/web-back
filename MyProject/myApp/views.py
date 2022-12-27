@@ -229,4 +229,22 @@ def delete_work(request):
 
     works = Work.objects.all()
     serializer = WorkSerializer(works, context = {"request": request}, many = True)
+    
+    return Response(serializer.data)
+
+
+@api_view(["GET","POST"])
+def waiter(request):
+    serializer = []
+    
+    if request.method == "POST":
+        waiter = Waiter()
+
+        waiter.name = request.data["name"]
+        waiter.email = request.data["email"]
+        waiter.save()
+    
+    waiters = Waiter.objects.all()
+    serializer = WaiterSerializer(waiters, context = {"request" : request}, many = True)
+    
     return Response(serializer.data)

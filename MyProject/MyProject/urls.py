@@ -46,6 +46,8 @@ urlpatterns = [
     path('work/',views.work),
     path('work/delete/',views.delete_work),
 
+    path("waiter/", views.waiter),
+
     path('dj-rest-auth/',include('dj_rest_auth.urls')),
     path('dj-rest-auth/register/',include('dj_rest_auth.registration.urls'))
 ] 

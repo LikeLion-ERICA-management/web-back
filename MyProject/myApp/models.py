@@ -95,3 +95,8 @@ class Work(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateField()
     image = models.ImageField(upload_to="Work/%Y/%m/%d")
+
+class Waiter(models.Model):
+    name = models.CharField(max_length = 10)
+    email = models.EmailField()
+    create_date = models.DateTimeField(auto_now_add=True)

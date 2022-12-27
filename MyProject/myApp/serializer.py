@@ -49,3 +49,8 @@ class WorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
         fields = ('id','title','duration','date','image',)
+    
+class WaiterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Waiter
+        fields = ('id','name','email','create_date')
