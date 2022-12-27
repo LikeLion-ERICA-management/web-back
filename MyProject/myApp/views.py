@@ -190,6 +190,17 @@ def load_application_questions(request):
     }
 
     return JsonResponse(res,json_dumps_params={'ensure_ascii': False})
+
+@api_view(["GET"])
+def application_all(request):
+    serializer = []
+
+    applications = Application.objects.all()
+    serializer = ApplicationSerializer(applications, context = {"request" : request}, many = True)
+    
+    return Response(serializer.data)
+
+
     
 @api_view(["GET","POST"])
 def about(request):

@@ -41,6 +41,8 @@ urlpatterns = [
     path('updateapplication/',views.update_application),
     path('loadapplicationquestion/',views.load_application_questions),
     
+    path('application/all/', views.application_all),
+    
     path('about/',views.about),
 
     path('work/',views.work),
