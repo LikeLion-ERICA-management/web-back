@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from .image_compress_snippet import compress_image
 
 # Create your models here.
 class Blog(models.Model):
@@ -93,6 +94,11 @@ class About(models.Model):
 
     body = models.TextField()
     image = models.ImageField(upload_to="Main")
+
+    def save(self, *args, **kwargs):
+        new_content_image = compress_image(self.image)
+        self.image = new_content_image
+        super().save(*args, **kwargs)
 
 class Work(models.Model):
     duration = models.CharField(choices=(("1","1학기"),("1.5","여름방학"),("2","2학기")), max_length=10)
