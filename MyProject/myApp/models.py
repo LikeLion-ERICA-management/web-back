@@ -68,6 +68,9 @@ class Application(models.Model):
         return self.name
     
 class Opening(models.Model):
+    class Meta:
+        get_latest_by = "id"
+        
     start_date = models.DateField()
     end_date = models.DateField()
     generation = models.SmallIntegerField()

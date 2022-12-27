@@ -185,11 +185,23 @@ def update_application(request):
 
 @api_view(["GET"])
 def load_application_questions(request):
-    res = {
-        "questions" : ["1","2","3","4","5","6","7","8","9","10"]
+    opening = Opening.objects.latest()
+    data = {
+        "questions": [
+                    opening.question1,
+                    opening.question2,
+                    opening.question3,
+                    opening.question4,
+                    opening.question5,
+                    opening.question6,
+                    opening.question7,
+                    opening.question8,
+                    opening.question9,
+                    opening.question10,
+                ]
     }
-
-    return JsonResponse(res,json_dumps_params={'ensure_ascii': False})
+    
+    return Response(data,status=200)
 
 @api_view(["GET"])
 def application_all(request):
