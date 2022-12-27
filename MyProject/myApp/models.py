@@ -106,6 +106,12 @@ class Work(models.Model):
     date = models.DateField()
     image = models.ImageField(upload_to="Work/%Y/%m/%d")
 
+    def save(self, *args, **kwargs):
+        new_content_image = compress_image(self.image)
+        self.image = new_content_image
+        super().save(*args, **kwargs)
+
+
 class Waiter(models.Model):
     name = models.CharField(max_length = 10)
     email = models.EmailField()
