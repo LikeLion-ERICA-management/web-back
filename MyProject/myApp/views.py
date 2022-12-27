@@ -336,6 +336,9 @@ def opening(request):
     serializer = []
 
     if request.method == "POST":
+        if Opening.objects.latest.is_opened:
+            return Response({"result" : "현재 공고가 열려 있습니다"}, status = 400)
+
         start_date = request.data["start_date"]
         end_date = request.data["end_date"]
         
