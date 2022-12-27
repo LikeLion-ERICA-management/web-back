@@ -6,6 +6,8 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+import datetime
+
 # Create your views here.
 class BlogViewSet(viewsets.ModelViewSet):
     queryset = Blog.objects.all()
@@ -306,3 +308,139 @@ def delete_faq(request):
     
     return Response(serializer.data)
 
+@api_view(["GET","POST"])
+def opening(request):
+    serializer = []
+
+    if request.method == "POST":
+        start_date = request.data["start_date"]
+        end_date = request.data["end_date"]
+        
+        sd = datetime.strptime(start_date, '%Y-%m-%d')
+        ed = datetime.strptime(end_date, '%Y-%m-%d')
+
+        if(ed - sd <= 0):
+            return Response({"result" : "시작 날짜가 종료 날짜보다 같거나 이후입니다."},status=403)
+        
+        opening = Opening()
+        opening.start_date = start_date
+        opening.end_date = end_date
+        opening.generation = request.data["generation"]
+
+        req_questions = request.data["questions"]
+        questions = [
+            opening.question1,
+            opening.question2,
+            opening.question3,
+            opening.question4,
+            opening.question5,
+            opening.question6,
+            opening.question7,
+            opening.question8,
+            opening.question9,
+            opening.question10,
+        ]
+
+        for i in range(10):
+            questions[i] = req_questions[i]
+
+        opening.save()
+    
+    openings = Opening.objects.all()
+    serializer = OpeningSerializer(openings,context = {"request" : request}, many = True)
+
+    return Response(serializer.data)
+
+@api_view(["GET"])
+def detail_opening(request):
+    serializer = []
+    opening_id = request.data["opening_id"]
+    try:
+        opening = Opening.objects.get(id = opening_id)
+        response = {
+                "id": opening.id,
+                "generation": opening.generation,
+                "title": opening.title,
+                "start_date": opening.start_date,
+                "end_date": opening.end_date,
+                "is_opened": opening.is_opened,
+                "questions": [
+                    opening.question1,
+                    opening.question2,
+                    opening.question3,
+                    opening.question4,
+                    opening.question5,
+                    opening.question6,
+                    opening.question7,
+                    opening.question8,
+                    opening.question9,
+                    opening.question10,
+                ]
+            }
+        return Response(response, status=200)
+    except Opening.DoesNotExist:
+        return Response({"result" : "Opening id dose not exist"}, status = 404)
+
+@api_view(["POST"])
+def update_opening(request):
+    serializer = []
+
+    try:
+        start_date = request.data["start_date"]
+        end_date = request.data["end_date"]
+        
+        sd = datetime.strptime(start_date, '%Y-%m-%d')
+        ed = datetime.strptime(end_date, '%Y-%m-%d')
+
+        if(ed - sd <= 0):
+            return Response({"result" : "시작 날짜가 종료 날짜보다 같거나 이후입니다."},status=400)
+        
+        opening_id = request.data["opening_id"]
+        opening = Opening.objects.get(id=opening_id)
+
+        opening.start_date = start_date
+        opening.end_date = end_date
+        opening.generation = request.data["generation"]
+
+        req_questions = request.data["questions"]
+        questions = [
+            opening.question1,
+            opening.question2,
+            opening.question3,
+            opening.question4,
+            opening.question5,
+            opening.question6,
+            opening.question7,
+            opening.question8,
+            opening.question9,
+            opening.question10,
+        ]
+
+        for i in range(10):
+            questions[i] = req_questions[i]
+
+        opening.save()
+    except Opening.DoesNotExist:
+        return Response({"result" : "Opening id dose not exist"}, status = 404)
+    
+    openings = Opening.objects.all()
+    serializer = OpeningSerializer(openings,context = {"request" : request}, many = True)
+
+    return Response(serializer.data)
+
+@api_view(["POST"])
+def delete_opening(request):
+    serializer = []
+
+    try:
+        opening_id = request.data["opening_id"]
+        opening = Opening.objects.get(id=opening_id)
+    
+        opening.delete()
+    except Opening.DoesNotExist:
+        return Response({"result" : "Opening id dose not exist"}, status = 404)
+    
+    openings = Opening.objects.all()
+    serializer = OpeningSerializer(openings,context = {"request" : request}, many = True)
+
+    return Response(serializer.data)

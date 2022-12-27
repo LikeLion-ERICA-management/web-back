@@ -59,3 +59,9 @@ class FAQSerializer(serializers.ModelSerializer):
     class Meta:
         model = FAQ
         fields = ('id','question_type','question','answer','create_date')
+    
+class OpeningSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Opening
+        fields=('id', 'generation', 'title', 'start_date', 'end_date','is_opened')
+    

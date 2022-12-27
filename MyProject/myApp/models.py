@@ -72,6 +72,7 @@ class Opening(models.Model):
     end_date = models.DateField()
     generation = models.SmallIntegerField()
     is_opened = models.BooleanField(default = False)
+    title = models.CharField(max_length=100)
     question1 = models.TextField(max_length=1000, null=True, blank=True)
     question2 = models.TextField(max_length=1000, null=True, blank=True)
     question3 = models.TextField(max_length=1000, null=True, blank=True)
