@@ -60,7 +60,14 @@ def calendar(request):
             year = request.data["year"]
             month = request.data["month"]
 
+            if not (year in user_data):
+                user_data[year] = {}
+            if not(month in user_data[year]):
+                user_data[year][month] = [0] * 31
             res = user_data[year][month]
+
+            calendar.log = json.dumps(user_data)
+            calendar.save()
 
             return Response({"result" : res})
 
@@ -74,7 +81,7 @@ def calendar_record(request):
 
     user_id = request.data["user_id"]
     try:
-        calendar:Calendar = Calendar.objects.find(user = user_id)
+        calendar:Calendar = Calendar.objects.get(user = user_id)
         
         if(calendar.is_recording):
             start_time = calendar.start_time
@@ -89,15 +96,18 @@ def calendar_record(request):
 
             user_data = calendar.log
             user_data = json.loads(user_data)
-            
-            curTimeData = datetime.datetime.now(pytz.timezone('UTC+09:00'))
+            print(user_data)
+
+            curTimeData = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
             year = curTimeData.year
             month = curTimeData.month
             day = curTimeData.day
+
             user_data[str(year)][str(month)][day-1] = workout_time
 
             calendar.is_recording = False
             calendar.start_time = 0 
+            calendar.log = json.dumps(user_data)
             calendar.save()
 
             return Response({"result" : "end", "workout_time" : workout_time}, status = 200)

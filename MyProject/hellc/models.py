@@ -10,7 +10,7 @@ class Pet(models.Model):
 
 class Calendar(models.Model):
     user = models.ForeignKey("myApp.CustomUser", verbose_name=("user"), on_delete=models.CASCADE)
-    log = models.TextField()
+    log = models.TextField(default="{}")
     total_time = models.IntegerField(default = 0)
     is_recording = models.BooleanField(default = False)
     start_time = models.IntegerField(default = 0)
