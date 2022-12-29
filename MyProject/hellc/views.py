@@ -107,7 +107,7 @@ def calendar_record(request):
 
             user_data = calendar.log
             user_data = json.loads(user_data)
-
+            tz = pytz.timezone('Asia/Seoul')
             curTimeData = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
             year = curTimeData.year
             month = curTimeData.month
@@ -132,9 +132,18 @@ def calendar_record(request):
             if not ("log" in user_data[str(year)][str(month)][day-1]):
                 user_data[str(year)][str(month)][day-1]["log"] = []
             user_data[str(year)][str(month)][day-1]["total_time"] += workout_time
+
+            dt_start_time = datetime.datetime.fromtimestamp(start_time)
+            dt_end_time = datetime.datetime.fromtimestamp(end_time)
+
+            
+            start_string = dt_start_time.astimezone(tz).strftime("%H:%M")
+            end_string = dt_end_time.astimezone(tz).strftime("%H:%M")
+            
+            
             worklog_value = {
-                "start_time" : workLog.start_time,
-                "end_time" : workLog.end_time,
+                "start_time" : start_string,
+                "end_time" : end_string,
                 "gym_name" : workLog.gym_name,
                 "is_arm" : workLog.is_arm,
                 "is_leg" : workLog.is_leg,
