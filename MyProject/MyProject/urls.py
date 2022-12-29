@@ -59,6 +59,8 @@ urlpatterns = [
     path("opening/update/", views.update_opening),
     path("opening/delete/", views.delete_opening),
 
+    path('hellc/', include('hellc.urls')),
+
     path('auth/',include('dj_rest_auth.urls')),
     path('auth/register/',include('dj_rest_auth.registration.urls'))
 ] 

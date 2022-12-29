@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     # 'django.contrib.sites',
     'myApp',
+    'hellc',
     'allauth',
     'allauth.account',
     'corsheaders',
