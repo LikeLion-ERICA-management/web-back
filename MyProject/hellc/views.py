@@ -58,14 +58,14 @@ def calendar(request):
         return Response(serializer.data)
     else:
         try:
-            user_id = request.data["user_id"]
+            user_id = request.query_params["user_id"]
             calendar =  Calendar.objects.get(user = user_id)
             
             user_data = calendar.log
             user_data = json.loads(user_data)
 
-            year = request.data["year"]
-            month = request.data["month"]
+            year = request.query_params["year"]
+            month = request.query_params["month"]
 
             if not (year in user_data):
                 user_data[year] = {}
