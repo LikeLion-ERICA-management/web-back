@@ -17,10 +17,10 @@ class Calendar(models.Model):
 
 class Room(models.Model):
     user = models.ForeignKey("myApp.CustomUser", verbose_name=("user"), on_delete=models.CASCADE)
-    host = models.ForeignKey("hellc.Pet", verbose_name=("pet"), on_delete=models.CASCADE)
+    host = models.IntegerField()
     
     guest_number = models.SmallIntegerField()
-    guest1 = models.ForeignKey("hellc.Pet", verbose_name=("pet"), on_delete=models.CASCADE)
-    guest2 = models.ForeignKey("hellc.Pet", verbose_name=("pet"), on_delete=models.CASCADE)
-    guest3 = models.ForeignKey("hellc.Pet", verbose_name=("pet"), on_delete=models.CASCADE)
-    guest4 = models.ForeignKey("hellc.Pet", verbose_name=("pet"), on_delete=models.CASCADE)
+    guest1 = models.IntegerField(default=-1)
+    guest2 = models.IntegerField(default=-1)
+    guest3 = models.IntegerField(default=-1)
+    guest4 = models.IntegerField(default=-1)
