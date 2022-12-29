@@ -91,7 +91,7 @@ def calendar_record(request):
             calendar.total_time += workout_time
 
             pet = Pet.objects.get(user = calendar.user)
-            pet.level = calendar.total_time // 1000000
+            pet.level = calendar.total_time // 5
             pet.save()
 
             user_data = calendar.log
@@ -103,7 +103,7 @@ def calendar_record(request):
             month = curTimeData.month
             day = curTimeData.day
 
-            user_data[str(year)][str(month)][day-1] = workout_time
+            user_data[str(year)][str(month)][day-1] += workout_time
 
             calendar.is_recording = False
             calendar.start_time = 0 
