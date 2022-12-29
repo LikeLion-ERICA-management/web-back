@@ -35,7 +35,14 @@ def calendar(request):
 
     if request.method == "POST":
         user_id = request.data["user_id"]
-        pet = Pet.objects.get(user_id = user_id)
+        try:
+            pet = Pet.objects.get(user_id = user_id)
+        except Pet.DoesNotExist:
+            pet = Pet()
+            user = CustomUser.objects.get(id = user_id)
+            pet.user = user
+            pet.name = "기본이름"
+            pet.save()
         
         calendar = Calendar()
 
@@ -96,7 +103,6 @@ def calendar_record(request):
 
             user_data = calendar.log
             user_data = json.loads(user_data)
-            print(user_data)
 
             curTimeData = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
             year = curTimeData.year
@@ -124,13 +130,16 @@ def calendar_record(request):
 @api_view(["GET", "POST"])
 def room(request):
     serializer = []
+    try:
+        user_id = request.data["user_id"]
+        room = Room.objects.get(id = user_id)
+    except Room.DoesNotExist:
+        return Response({"result" : "Room does not exist"})
 
     # 방문
     if (request.method == "POST"):
-        user_id = request.data["user_id"]
         guest_id = request.data["guest_id"]
         
-        room = Room.objects.get(id = user_id)
         if (room.guest_number >= 4):
             return Response({"result" : "Room is Full!"})
         else:
@@ -144,8 +153,8 @@ def room(request):
                 room.guest4 = guest_id
     
             room.guest_number += 1
-    
-    host_pet = Pet.objects.get(user_id = room.host)
+    user = CustomUser.objects.get(id = room.host)
+    host_pet = Pet.objects.get(user = user)
 
     res = {
         "host" : {
@@ -163,7 +172,8 @@ def room(request):
     room_guests = [room.guest1, room.guest2, room.guest3, room.guest4]
 
     for index in range(room.guest_number):
-        pet = Pet.objects.get(user_id = room_guests[index])
+        user = CustomUser.objects.get(id = room_guests[index])
+        pet = Pet.objects.get(user=user)
         res[guests[index]]["name"] = pet.name
         res[guests[index]]["level"] = pet.level
 

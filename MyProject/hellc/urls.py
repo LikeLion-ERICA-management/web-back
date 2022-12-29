@@ -8,6 +8,6 @@ urlpatterns = [
     path('calendar/', views.calendar),
     path('calendar/record/', views.calendar_record),
     
-    path('room/', views.calendar),
-    path('room/visit/', views.calendar),
+    path('room/', views.room),
+    path('room/visit/', views.room),
 ]
