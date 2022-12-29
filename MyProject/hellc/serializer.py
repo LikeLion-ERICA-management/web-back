@@ -11,7 +11,7 @@ class PetSerializer(serializers.ModelSerializer):
 class CalendarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Calendar
-        fields = ("name", "log", "user")
+        fields = ("user","log",)
 
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:

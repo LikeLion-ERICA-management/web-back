@@ -19,7 +19,7 @@ class Room(models.Model):
     user = models.ForeignKey("myApp.CustomUser", verbose_name=("user"), on_delete=models.CASCADE)
     host = models.IntegerField()
     
-    guest_number = models.SmallIntegerField()
+    guest_number = models.SmallIntegerField(default=0)
     guest1 = models.IntegerField(default=-1)
     guest2 = models.IntegerField(default=-1)
     guest3 = models.IntegerField(default=-1)

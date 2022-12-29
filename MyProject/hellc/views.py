@@ -43,8 +43,8 @@ def calendar(request):
         calendar.save()
 
         room = Room()
-        room.user = request.data["user_id"]
-        room.host = pet
+        room.user = CustomUser.objects.get(id = user_id)
+        room.host = user_id
         room.save()
 
         serializer = CalendarSerializer(calendar, context = {"request" : request})
