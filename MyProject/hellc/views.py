@@ -48,6 +48,9 @@ def calendar(request):
         calendar = Calendar()
 
         calendar.user = CustomUser.objects.get(id = user_id)
+        user_data = calendar.log
+        user_data = json.loads(user_data)
+
         calendar.save()
 
         room = Room()
@@ -71,7 +74,7 @@ def calendar(request):
             if not (year in user_data):
                 user_data[year] = {}
             if not(month in user_data[year]):
-                user_data[year][month] = [0] * 31
+                user_data[year][month] = [{} for _ in range(31)]
             res = user_data[year][month]
 
             calendar.log = json.dumps(user_data)
@@ -110,7 +113,36 @@ def calendar_record(request):
             month = curTimeData.month
             day = curTimeData.day
 
-            user_data[str(year)][str(month)][day-1] += workout_time
+            workLog = WorkLog()
+            workLog.start_time = calendar.start_time
+            workLog.end_time = end_time
+            workLog.is_arm = request.data["is_arm"] 
+            workLog.is_chest = request.data["is_chest"] 
+            workLog.is_shoulder = request.data["is_shoulder"] 
+            workLog.is_leg = request.data["is_leg"] 
+            workLog.is_back = request.data["is_back"]
+            workLog.gym_name = request.data["gym_name"]
+            workLog.year = year
+            workLog.month = month
+            workLog.date = day
+            workLog.save()
+
+            if not ("total_time" in user_data[str(year)][str(month)][day-1]):
+                user_data[str(year)][str(month)][day-1]["total_time"] = 0
+            if not ("log" in user_data[str(year)][str(month)][day-1]):
+                user_data[str(year)][str(month)][day-1]["log"] = []
+            user_data[str(year)][str(month)][day-1]["total_time"] += workout_time
+            worklog_value = {
+                "start_time" : workLog.start_time,
+                "end_time" : workLog.end_time,
+                "gym_name" : workLog.gym_name,
+                "is_arm" : workLog.is_arm,
+                "is_leg" : workLog.is_leg,
+                "is_shoulder" : workLog.is_shoulder,
+                "is_back" : workLog.is_back,
+                "is_chest" : workLog.is_chest,
+            }
+            user_data[str(year)][str(month)][day-1]["log"].append(worklog_value)
 
             calendar.is_recording = False
             calendar.start_time = 0 

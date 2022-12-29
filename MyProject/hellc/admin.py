@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(Pet)
 admin.site.register(Calendar)
 admin.site.register(Room)
+admin.site.register(WorkLog)
