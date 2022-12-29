@@ -35,6 +35,10 @@ def calendar(request):
 
     if request.method == "POST":
         user_id = request.data["user_id"]
+
+        if Calendar.objects.get(user = user_id):
+            return Response({"result": "Calender Already Exsit"}, status=400)
+
         try:
             pet = Pet.objects.get(user_id = user_id)
         except Pet.DoesNotExist:
