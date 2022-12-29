@@ -24,7 +24,7 @@ def pet(request):
         return Response(serializer.data)
     
     else:
-        user_id = request.data["user_id"]
+        user_id = request.query_params["user_id"]
         pet = Pet.objects.get(id = user_id)
         serializer = PetSerializer(pet, context = {"request" : request})
         return Response(serializer.data)
@@ -59,14 +59,14 @@ def calendar(request):
         return Response(serializer.data)
     else:
         try:
-            user_id = request.data["user_id"]
+            user_id = request.query_params["user_id"]
             calendar =  Calendar.objects.get(user = user_id)
             
             user_data = calendar.log
             user_data = json.loads(user_data)
 
-            year = request.data["year"]
-            month = request.data["month"]
+            year = request.query_params["year"]
+            month = request.query_params["month"]
 
             if not (year in user_data):
                 user_data[year] = {}
@@ -132,7 +132,11 @@ def calendar_record(request):
 def room(request):
     serializer = []
     try:
-        user_id = request.data["user_id"]
+        user_id = 1
+        if(request.method == "POST"):
+            user_id = request.data["user_id"]
+        else:
+            user_id = request.query_params["user_id"]
         room = Room.objects.get(id = user_id)
     except Room.DoesNotExist:
         return Response({"result" : "Room does not exist"})
