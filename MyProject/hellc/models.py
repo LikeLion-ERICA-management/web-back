@@ -16,6 +16,7 @@ class Calendar(models.Model):
     total_time = models.IntegerField(default = 0)
     is_recording = models.BooleanField(default = False)
     start_time = models.IntegerField(default = 0)
+    status = models.CharField(max_length=100, default="start")
     
     def __str__(self):
         return self.user.email
@@ -36,11 +37,11 @@ class Room(models.Model):
 class WorkLog(models.Model):
     start_time = models.CharField(max_length=100)
     end_time = models.CharField(max_length=100)
-    is_chest = models.BooleanField()
-    is_back = models.BooleanField()
-    is_shoulder = models.BooleanField()
-    is_leg = models.BooleanField
-    is_arm = models.BooleanField
+    is_chest = models.BooleanField(default = False)
+    is_back = models.BooleanField(default = False)
+    is_shoulder = models.BooleanField(default = False)
+    is_leg = models.BooleanField(default = False)
+    is_arm = models.BooleanField(default = False)
     gym_name = models.CharField(max_length=100)
     year = models.SmallIntegerField(default = 0)
     month = models.SmallIntegerField(default = 0)
